@@ -3,8 +3,11 @@
     <div>
       <Logo />
       <h1 class="title">
-        telescope-for-spotify
+        Telescope for Spotify
       </h1>
+      <p class="subtitle">
+        A telescope into your Spotify account
+      </p>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -28,17 +31,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Logo from '@/components/Logo.vue';
 
-export default Vue.extend({})
+export default {
+  components: { Logo },
+};
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -49,16 +49,8 @@ export default Vue.extend({})
 }
 
 .title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

@@ -1,3 +1,5 @@
+import auth from './config/auth';
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -39,6 +41,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://auth.nuxtjs.org
+    '@nuxtjs/auth-next',
   ],
 
   // Router configuration
@@ -49,15 +53,23 @@ export default {
   axios: {
   },
 
+  // Auth module configuration (https://auth.nuxtjs.org)
+  auth,
+
   // Build configuration (https://go.nuxtjs.dev/config-build)
   build: {
   },
 
   // Public runtime configuration
   publicRuntimeConfig: {
+    // Spotify (https://developer.spotify.com)
+    spotifyRedirectUri: process.env.SPOTIFY_REDIRECT_URI,
   },
 
   // Private runtime configuration
   privateRuntimeConfig: {
+    // Spotify (https://developer.spotify.com)
+    spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
+    spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   },
 };

@@ -55,9 +55,9 @@
           <a
             class="text-base cursor-pointer hover:text-gray-800 transform hover:-translate-x-1
                    transition-transform ease-in-out duration-200"
-            @click="auth = !auth"
+            @click="$auth.loggedIn ? $auth.logout() : $auth.login()"
           >
-            {{ auth ? 'Logout' : 'Login' }}
+            {{ $auth.loggedIn ? 'Logout' : 'Login' }}
           </a>
         </div>
       </slot>
@@ -67,17 +67,17 @@
         <!-- User -->
         <transition name="animate-user" mode="out-in">
           <div
-            v-if="auth"
-            :key="name"
+            v-if="$auth.loggedIn"
+            :key="$auth.user.id"
             class="flex justify-end items-center container text-right"
           >
             <p class="text-sm mr-4">
               {{ greeting }},<br>
-              <strong class="text-base">{{ name }}</strong>
+              <strong class="text-base">{{ $auth.user.display_name }}</strong>
             </p>
             <img
-              :src="'https://i.scdn.co/image/ab6775700000ee85e0181e48cb8b1954057f3ac8'"
-              :alt="`Avatar for ${name}`"
+              :src="$auth.user.images[0].url"
+              :alt="`Avatar for ${$auth.user.display_name}`"
               class="h-12 w-12 rounded-full"
             >
           </div>
@@ -94,8 +94,6 @@ export default Vue.extend({
   name: 'Director',
   data: () => ({
     isOpen: false,
-    auth: false,
-    name: 'Jonathan',
   }),
   computed: {
     greeting(): string {

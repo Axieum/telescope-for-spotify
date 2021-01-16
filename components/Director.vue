@@ -71,14 +71,15 @@
             :key="$auth.user.id"
             class="flex justify-end items-center container text-right"
           >
-            <p class="text-sm mr-4">
+            <p class="text-sm">
               {{ greeting }},<br>
               <strong class="text-base">{{ $auth.user.display_name }}</strong>
             </p>
             <img
+              v-if="$auth.user.images.length"
               :src="$auth.user.images[0].url"
               :alt="`Avatar for ${$auth.user.display_name}`"
-              class="h-12 w-12 rounded-full"
+              class="h-12 w-12 ml-4 rounded-full"
             >
           </div>
         </transition>

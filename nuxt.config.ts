@@ -16,6 +16,8 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    // https://github.com/tobiasahlin/SpinKit
+    'spinkit/spinkit.css',
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -33,6 +35,8 @@ export default {
     '@nuxtjs/tailwindcss',
     // https://github.com/nuxt-community/svg-module
     '@nuxtjs/svg',
+    // https://github.com/nuxt-community/moment-module
+    '@nuxtjs/moment',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)

@@ -22,28 +22,12 @@
       <slot name="destinations">
         <div class="flex flex-col justify-end container text-right space-y-2">
           <NuxtLink
-            to="/"
+            to="/scout"
             no-prefetch
             class="text-2xl md:text-3xl font-black hover:text-gray-800 transform
                    hover:-translate-x-1 transition-transform ease-in-out duration-200"
           >
-            First
-          </NuxtLink>
-          <NuxtLink
-            to="/second"
-            no-prefetch
-            class="text-2xl md:text-3xl font-black hover:text-gray-800 transform
-                   hover:-translate-x-1 transition-transform ease-in-out duration-200"
-          >
-            Second
-          </NuxtLink>
-          <NuxtLink
-            to="/"
-            no-prefetch
-            class="text-2xl md:text-3xl font-black hover:text-gray-800 transform
-                   hover:-translate-x-1 transition-transform ease-in-out duration-200"
-          >
-            Third
+            Scout
           </NuxtLink>
         </div>
       </slot>

@@ -3,7 +3,7 @@ import auth from './config/auth';
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'telescope-for-spotify',
+    title: 'Telescope for Spotify',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -13,9 +13,9 @@
     <section v-for="[date, section] in sections.entries()" v-else :key="date.valueOf()">
       <!-- Title -->
       <div class="text-center mb-8">
-        <h1 class="text-xl md:text-2xl font-bold">
-          {{ $moment(date).calendar({ lastWeek: 'dddd', sameElse: 'dddd' }) }}
-        </h1>
+        <h2 class="text-xl md:text-2xl font-bold">
+          {{ $moment(date).calendar({ lastWeek: 'dddd', sameElse: 'dddd' }).split(' ')[0] }}
+        </h2>
         <small class="uppercase opacity-75">
           {{ $moment(date).format('MMMM Do, YYYY') }}
         </small>

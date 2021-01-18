@@ -208,5 +208,9 @@ export default Vue.extend({
         .toLowerCase();
     },
   },
+
+  head: {
+    title: 'Scout - Telescope for Spotify',
+  },
 });
 </script>

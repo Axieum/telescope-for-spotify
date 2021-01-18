@@ -4,11 +4,9 @@
       <!-- Left -->
       <div class="flex justify-start items-center">
         <!-- Brand -->
-        <a href="#" class="text-xl font-black">Telescope</a>
-        <div class="h-6 w-px bg-black opacity-25 mx-2 my-auto" />
-        <p class="text-base">
-          Scout
-        </p>
+        <NuxtLink to="/" class="text-xl font-black">
+          Telescope
+        </NuxtLink>
       </div>
       <!-- Right -->
       <div class="flex justify-end items-center flex-shrink-0">

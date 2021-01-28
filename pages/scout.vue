@@ -38,10 +38,13 @@
       </transition-group>
     </section>
     <!-- Footer -->
-    <p v-if="$fetchState.error" class="text-center text-red-600">
-      Something went wrong!
-      <a class="hover:underline cursor-pointer" @click="$fetch()">Retry?</a>
-    </p>
+    <div v-if="$fetchState.error">
+      <img src="~/assets/graphics/access_denied.svg" alt="Error" class="h-48 md:h-64 mx-auto">
+      <p class="text-center text-xl md:text-2xl font-black py-6">
+        Something went wrong!
+        <a class="text-sm text-red-600 hover:underline cursor-pointer" @click="$fetch()">Retry?</a>
+      </p>
+    </div>
     <p v-else-if="!$fetchState.pending" class="text-center opacity-50">
       That's everything &mdash; you're up to date!
     </p>

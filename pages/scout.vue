@@ -115,11 +115,12 @@ export default Vue.extend({
         // sort by release date - descending
         .sort((a: any, b: any) => (b.date.isAfter(a.date) ? 1 : -1))
         // group by release date
-        .reduce((sections: Map<number, any[]>, release: any) => (
-          sections.set(release.date.valueOf(), [
-            ...(sections.get(release.date.valueOf()) || []),
-            release,
-          ])), new Map<number, any[]>());
+        .reduce((sections: Map<number, any[]>, release: any) => {
+          const section: any[] | undefined = sections.get(release.date.valueOf());
+          if (section) section.push(release);
+          else sections.set(release.date.valueOf(), [release]);
+          return sections;
+        }, new Map<number, any[]>());
     },
   },
 

@@ -49,9 +49,16 @@
         <a class="text-sm text-red-600 hover:underline cursor-pointer" @click="$fetch()">Retry?</a>
       </p>
     </div>
-    <p v-else-if="!$fetchState.pending" class="text-center opacity-50">
-      That's everything &mdash; you're up to date!
-    </p>
+    <div v-else-if="!$fetchState.pending" class="text-center opacity-50">
+      <p>That's everything &mdash; you're up to date!</p>
+      <a
+        v-if="releases"
+        class="inline-block hover:underline cursor-pointer mt-4"
+        @click="createPlaylist()"
+      >
+        Add all to playlist?
+      </a>
+    </div>
   </div>
 </template>
 
@@ -198,6 +205,83 @@ export default Vue.extend({
           .sort((a: any, b: any) => (b.date.isAfter(a.date) ? 1 : -1)));
     },
     /**
+     * Creates a playlist containing all listed releases.
+     *
+     * @return Promise<any> promise of newly created playlist
+     */
+    async createPlaylist(): Promise<any> {
+      // Update the fetch state
+      this.progress = `Fetching tracks for ${this.releases.length} albums...`;
+      this.$fetchState.error = null;
+      this.$fetchState.pending = true;
+
+      // Asynchronously create the playlist
+      return Promise
+
+        // Fetch all the tracks within each release album
+        .all(
+          // Request in chunks of albums - there is a limit per request
+          this.chunkArray(this.releases, 20)
+            .map((chunk: any[]) => this.$axios
+              .get('https://api.spotify.com/v1/albums', {
+                params: { ids: chunk.map((release: any) => release.id).join(',') },
+              })
+              // Extract all tracks from the returned albums
+              .then(({ data: { albums } }): any[] => (
+                albums.flatMap((album: any) => {
+                  // Inherit the release date from the album, we'll use this to sort later; async
+                  const date: moment.Moment = this.$moment(album.release_date, 'YYYY-MM-DD');
+                  return album.tracks.items.map((track: any) => ({ ...track, date }));
+                })
+              ))),
+        )
+        // Flatten all chunks of tracks
+        .then((chunks: any[][]) => chunks.flat(1))
+        // Sort tracks by release date - descending
+        .then((tracks: any[]) => tracks.sort((a: any, b: any) => (b.date.isAfter(a.date) ? 1 : -1)))
+
+        // Create and populate the playlist
+        .then((tracks: any[]) => {
+          this.progress = 'Creating a new playlist...';
+          return this.$axios
+            // Create the playlist
+            .post(`https://api.spotify.com/v1/users/${this.$auth.user?.id}/playlists`, {
+              // Name of the new playlist; a user may have several playlists with the same name
+              name: `Scout | ${this.since.format('L')} - ${this.$moment().format('L')}`,
+              // Playlist description as displayed in Spotify clients
+              description: `Scouting new releases from ${this.since.format('Do, MMM. YYYY')} \
+through ${this.$moment().format('Do, MMM. YYYY')} - ${window.location.host}${this.$route.path}`,
+              // True if the playlist should be public, otherwise private
+              public: false,
+            })
+            // Add tracks to the playlist
+            .then(({ data }: any): Promise<any> => {
+              this.progress = `Adding ${tracks.length} tracks to playlist...`;
+              return this
+                // Post in chunks - there is a limit per request
+                .chunkArray(tracks, 50)
+                // This needs to be synchronously, and in a linear fashion to retain ordering
+                .reduce((promise: Promise<any>, items: any[]) => (
+                  promise.then(() => this.$axios.post(data.tracks.href, {
+                    uris: items.map((item: any) => item.uri),
+                  }))
+                ), Promise.resolve(null) as Promise<any>)
+                // Resolve with the created playlist, i.e. discard the track post responses
+                .then(() => data);
+            });
+        })
+
+        // On success, navigate the user to the playlist
+        .then((playlist: any) => {
+          window.open(playlist.external_urls.spotify, '_blank');
+          return playlist;
+        })
+
+        // Update the fetch state
+        .catch((error) => { this.$fetchState.error = error; return error; })
+        .finally(() => { this.$fetchState.pending = false; });
+    },
+    /**
      * Normalises a release title, i.e. attempts to remove common variations.
      *
      * @param title album/track title
@@ -214,6 +298,22 @@ export default Vue.extend({
         .trim()
         // Transform all to lowercase
         .toLowerCase();
+    },
+    /**
+     * Splits an array into chunks.
+     *
+     * @param array list of values to chunk
+     * @param size maximum size of each chunk
+     * @return list of chunks of the original array
+     */
+    chunkArray(array: any[], size: number): any[][] {
+      return array.reduce((chunks: any[], item: any, i: number) => {
+        const n = Math.floor(i / size);
+        if (chunks[n]) chunks[n].push(item);
+        // eslint-disable-next-line no-param-reassign
+        else chunks[n] = [item];
+        return chunks;
+      }, []);
     },
   },
 

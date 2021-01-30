@@ -10,7 +10,11 @@
       </p>
     </div>
     <!-- Releases -->
-    <section v-for="[date, section] in sections.entries()" v-else :key="date.valueOf()">
+    <section
+      v-for="[date, section] in sections.entries()"
+      v-else-if="!$fetchState.error"
+      :key="date.valueOf()"
+    >
       <!-- Title -->
       <div class="text-center mb-8">
         <h2 class="text-xl md:text-2xl font-bold">

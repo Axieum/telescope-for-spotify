@@ -58,6 +58,8 @@ export default {
 
   // Build configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    // Enables Common CSS Extraction using Vue Server Renderer guidelines
+    extractCSS: true,
   },
 
   // Public runtime configuration

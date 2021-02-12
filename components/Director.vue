@@ -113,7 +113,7 @@ export default Vue.extend({
 
 <style lang="scss">
 #director {
-  --bg-opacity: .98;
+  --bg-opacity: .95;
   //backdrop-filter: blur(8px);
 
   .animate-user {

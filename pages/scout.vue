@@ -247,7 +247,8 @@ export default Vue.extend({
             // Create the playlist
             .post(`https://api.spotify.com/v1/users/${this.$auth.user?.id}/playlists`, {
               // Name of the new playlist; a user may have several playlists with the same name
-              name: `Scout | ${this.since.format('L')} - ${this.$moment().format('L')}`,
+              name: `Scout | ${this.since.format('DD/MM/YYYY')} - \
+${this.$moment().format('DD/MM/YYYY')}`,
               // Playlist description as displayed in Spotify clients
               description: `Scouting new releases from ${this.since.format('Do, MMM. YYYY')} \
 through ${this.$moment().format('Do, MMM. YYYY')} - ${window.location.host}${this.$route.path}`,

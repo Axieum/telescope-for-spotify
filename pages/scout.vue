@@ -52,7 +52,7 @@
     <div v-else-if="!$fetchState.pending" class="text-center opacity-50">
       <p>That's everything &mdash; you're up to date!</p>
       <a
-        v-if="releases"
+        v-if="releases.length > 0"
         class="inline-block hover:underline cursor-pointer mt-4"
         @click="createPlaylist()"
       >
@@ -64,6 +64,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import pMap from 'p-map';
 import AlbumTile from '@/components/tiles/AlbumTile.vue';
 
 const DAYS: number = 30; // days a release is considered new
@@ -84,8 +85,10 @@ export default Vue.extend({
 
     // Next, we'll fetch the latest releases for each followed artist
     this.progress = `Fetching releases from ${artistIds.length} artists...`;
-    const artistReleases: any[][] = await Promise.all(
-      artistIds.map((id: string) => this.fetchArtistNewReleases(id, this.since)),
+    const artistReleases: any[][] = await pMap(
+      artistIds,
+      (id: string) => this.fetchArtistNewReleases(id, this.since),
+      { concurrency: 10, stopOnError: true },
     );
 
     // Now, we can filter and push each release into the list

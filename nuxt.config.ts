@@ -1,4 +1,5 @@
 import auth from './config/auth';
+import axios from './config/axios';
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -54,8 +55,7 @@ export default {
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {
-  },
+  axios,
 
   // Auth module configuration (https://auth.nuxtjs.org)
   auth,

@@ -15,7 +15,7 @@ module.exports = {
   },
   settings: {
     // disable errors for intentional transitive dependencies, e.g. 'vue' through 'nuxt'
-    'import/core-modules': ['vue'],
+    'import/core-modules': ['vue', 'axios', 'axios-retry'],
     // resolve import aliases, e.g. @/components
     'import/resolver': {
       alias: {

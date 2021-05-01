@@ -17,6 +17,7 @@ export default {
         'user-read-currently-playing', // read access to a user’s currently playing content
         'user-follow-read', // read access to the list of artists and other users that the user follows
         'user-read-email', // read access to user’s email address
+        'playlist-modify-private', // write access to a user's private playlists
       ],
     },
   },

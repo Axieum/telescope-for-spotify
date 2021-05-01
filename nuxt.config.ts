@@ -1,4 +1,5 @@
 import auth from './config/auth';
+import axios from './config/axios';
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -16,6 +17,8 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    // https://github.com/tobiasahlin/SpinKit
+    'spinkit/spinkit.css',
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -33,6 +36,8 @@ export default {
     '@nuxtjs/tailwindcss',
     // https://github.com/nuxt-community/svg-module
     '@nuxtjs/svg',
+    // https://github.com/nuxt-community/moment-module
+    '@nuxtjs/moment',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -50,8 +55,7 @@ export default {
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {
-  },
+  axios,
 
   // Auth module configuration (https://auth.nuxtjs.org)
   auth,
